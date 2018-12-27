@@ -1,0 +1,44 @@
+﻿[worldserver]
+#
+###################################################################################################
+
+###################################################################################################
+#    AntiFarming.Enable
+#       Description: Enables or disables the AntiFarming System functionality
+#       Default:     1 - (Enabled)
+#                    0 - (Disabled)
+
+AntiFarming.Enable = 1
+
+#
+#    AntiFarming.LoginMessage
+#       Description: Enable login message "This server is running an Antifarming module."
+#       Default:     1 - (Enabled)
+#                    0 - (Disabled)
+
+AntiFarming.LoginMessage = 1
+
+#
+#    AntiFarming.BanCharacter
+#       Description: Enables or disables the Auto Ban functionality for players that have a certain quantity of Warnings
+#       Default:     1 - (Enabled)
+#                    0 - (Disabled)
+
+AntiFarming.BanCharacter = 1
+
+#
+#    AntiFarming.BanTime
+#       Description: Time (in days) that the player will get banned
+#       Default:     1
+
+AntiFarming.BanTime = 1
+
+#
+#    AntiFarming.Warnings
+#       Description: Amount of Warnings that is necessary to Auto Ban a player
+#       Default:     5
+
+AntiFarming.Warnings = 5
+
+#
+###################################################################################################
