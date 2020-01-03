@@ -12,19 +12,34 @@ AntiFarming.Enable = 1
 
 #
 #    AntiFarming.LoginMessage
-#       Description: Enable login message "This server is running an Antifarming module."
+#       Description: Enable login message "This server is running the Antifarming module."
 #       Default:     1 - (Enabled)
 #                    0 - (Disabled)
 
 AntiFarming.LoginMessage = 1
 
 #
-#    AntiFarming.BanCharacter
+#    AntiFarming.KickPlayer
+#       Description: Enables or disables the Auto Kick functionality for players that have a certain quantity of Warnings
+#       Default:     1 - (Enabled)
+#                    0 - (Disabled)
+
+AntiFarming.KickPlayer = 1
+
+#
+#    AntiFarming.KickPlayer.Warnings
+#       Description: Amount of Warnings that is necessary to Auto Kick a player
+#       Default:     5
+
+AntiFarming.KickPlayer.Warnings = 5
+
+#
+#    AntiFarming.BanPlayer
 #       Description: Enables or disables the Auto Ban functionality for players that have a certain quantity of Warnings
 #       Default:     1 - (Enabled)
 #                    0 - (Disabled)
 
-AntiFarming.BanCharacter = 1
+AntiFarming.BanPlayer = 0
 
 #
 #    AntiFarming.BanTime
@@ -34,11 +49,18 @@ AntiFarming.BanCharacter = 1
 AntiFarming.BanTime = 1
 
 #
-#    AntiFarming.Warnings
+#    AntiFarming.BanPlayer.Warnings
 #       Description: Amount of Warnings that is necessary to Auto Ban a player
-#       Default:     5
+#       Default:     8
 
-AntiFarming.Warnings = 5
+AntiFarming.BanPlayer.Warnings = 8
+
+#
+#    AntiFarming.MinHealth
+#       Description: Minimum Health Points that some player must have in order to MAYBE be excluded from AntiFarming check when it's get dead.
+#       Default:     10000
+
+AntiFarming.MinHealth = 10000
 
 #
 ###################################################################################################
