@@ -13,7 +13,7 @@
 
 class AntiFarming {
 public:
-    typedef std::map<uint64, uint32> antiFarmingData;
+    typedef std::map<uint64, uint8> antiFarmingData;
     antiFarmingData dataMap;
 };
 #define sAntiFarming ACE_Singleton<AntiFarming, ACE_Null_Mutex>::instance()
