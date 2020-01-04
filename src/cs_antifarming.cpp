@@ -52,15 +52,13 @@ public:
         }
 
         char msg[250];
-        uint32 id;
         std::string charName;
         std::string accName;
 
         for (AntiFarming::antiFarmingData::iterator itr = sAntiFarming->dataMap.begin(); itr != sAntiFarming->dataMap.end() && i < RLimit; ++itr, i++) {
-            id = itr->first;
             sObjectMgr->GetPlayerNameByGUID(itr->first, charName);
             AccountMgr::GetName(sObjectMgr->GetPlayerAccountIdByGUID(itr->first), accName);
-            snprintf(msg, 250, "ID: |cFFFFFFFF%u|r | Character: |cFFFFFFFF%s|r | Account: |cFFFFFFFF%s|r | Warning Level: |cFFFF0000%u|r\n", id, charName.c_str(), accName.c_str(), itr->second);
+            snprintf(msg, 250, "ID: |cFFFFFFFF%lu|r | Character: |cFFFFFFFF%s|r | Account: |cFFFFFFFF%s|r | Warning Level: |cFFFF0000%u|r\n", (long)itr->first, charName.c_str(), accName.c_str(), itr->second);
             handler->PSendSysMessage(msg);
             handler->SetSentErrorMessage(true);
         }
