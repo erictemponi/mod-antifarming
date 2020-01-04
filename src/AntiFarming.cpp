@@ -16,7 +16,7 @@ public: AntiFarmingPlayerScript() : PlayerScript("AntiFarmingPlayerScript") {}
             }
         }
 
-        void OnPVPKill(Player* killer, Player* killed) {
+        void OnPVPKill(Player* killer, Player* killed) override {
             if (sConfigMgr->GetBoolDefault("AntiFarming.Enable", true)) {
                 uint32 KillerGUID = killer->GetGUID();
                 uint32 VictimGUID = killed->GetGUID();
