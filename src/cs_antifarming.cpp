@@ -37,9 +37,8 @@ public:
 
     static bool HandleLogCommand(ChatHandler* handler, const char* args) {
         WorldSession *Session = handler->GetSession();
-        Player *player = Session->GetPlayer();
         uint32 RLimit = 10;
-        int i = 0;
+        uint32 i = 0;
         if ((char*)args)
             RLimit = atoi((char*)args);
 
@@ -59,15 +58,14 @@ public:
             sObjectMgr->GetPlayerNameByGUID(itr->first, charName);
             AccountMgr::GetName(sObjectMgr->GetPlayerAccountIdByGUID(itr->first), accName);
             snprintf(msg, 250, "ID: |cFFFFFFFF%lu|r | Character: |cFFFFFFFF%s|r | Account: |cFFFFFFFF%s|r | Warning Level: |cFFFF0000%u|r\n", (long)itr->first, charName.c_str(), accName.c_str(), itr->second);
-            handler->PSendSysMessage(msg);
+            handler->PSendSysMessage("%s", msg);
             handler->SetSentErrorMessage(true);
         }
         return true;
     }
 
-    static bool HandleDeleteAllCommand(ChatHandler* handler, const char* args) {
+    static bool HandleDeleteAllCommand(ChatHandler* handler) {
         WorldSession *Session = handler->GetSession();
-        Player *player = Session->GetPlayer();
 
         if (sAntiFarming->dataMap.empty()) {
             Session->SendNotification("There are no records!");
