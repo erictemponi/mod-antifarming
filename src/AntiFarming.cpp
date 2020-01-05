@@ -24,7 +24,7 @@ public: AntiFarmingPlayerScript() : PlayerScript("AntiFarmingPlayerScript") {}
                 if (KillerGUID == VictimGUID) // Suicide
                     return;
 				
-                if (killer->GetSession()->GetRemoteAddress() == killed->GetSession()->GetRemoteAddress() || killed->GetMaxHealth() < sConfigMgr->GetIntDefault("AntiFarming.MinHealth", 10000)) { // about 1/4 of the maximum hp a character can have on your server to make this fully functional.
+                if (killer->GetSession()->GetRemoteAddress() == killed->GetSession()->GetRemoteAddress() || killed->GetMaxHealth() < (uint32)sConfigMgr->GetIntDefault("AntiFarming.MinHealth", 10000)) { // about 1/4 of the maximum hp a character can have on your server to make this fully functional.
                     sAntiFarming->dataMap[KillerGUID]++;
                     std::string str = "|cFFFFFC00[Anti-Farm System]|cFF00FFFF[|cFF60FF00" + killer->GetName() + "|cFF00FFFF] Possible Farmer!";
                     WorldPacket data(SMSG_NOTIFICATION, (str.size() + 1));
@@ -67,7 +67,7 @@ public:
             sConfigMgr->LoadMore(cfg_file.c_str());
         }
     }
-    void OnAfterConfigLoad(bool reload) override {
+    void OnAfterConfigLoad(bool /*reload*/) override {
         sLog->outString("Antifarming Module Loaded.");
     }
 };
