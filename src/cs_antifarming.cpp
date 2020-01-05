@@ -64,7 +64,7 @@ public:
         return true;
     }
 
-    static bool HandleDeleteAllCommand(ChatHandler* handler) {
+    static bool HandleDeleteAllCommand(ChatHandler* handler, const char* /*args*/) {
         WorldSession *Session = handler->GetSession();
 
         if (sAntiFarming->dataMap.empty()) {
