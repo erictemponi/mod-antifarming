@@ -83,13 +83,12 @@ public:
         if (!*args)
             return false;
         WorldSession *Session = handler->GetSession();
-        Player *player = Session->GetPlayer();
         uint32 id = atoi((char*)args);
         AntiFarming::antiFarmingData::iterator it = sAntiFarming->dataMap.find(id);
         if (it == sAntiFarming->dataMap.end()) {
             char msg[250];
             snprintf(msg, 250, "Log with ID \"%u\" doesn't exist!", id);
-            Session->SendNotification(msg);
+            Session->SendNotification("%s", msg);
             return false;
         }
         sAntiFarming->dataMap.erase(it);
@@ -97,7 +96,7 @@ public:
         return true;
     }
 
-    static bool HandleHelpLogCommand(ChatHandler* handler, const char* args) {
+    static bool HandleHelpLogCommand(ChatHandler* handler, const char* /*args*/) {
         handler->PSendSysMessage("This command allows you to check the Database Log for abusers of the Anti-Farm System \n");
         handler->PSendSysMessage("Entering a number after this command will be used to check the maximum lines shown \n");
         handler->PSendSysMessage("Example : \".afs log 15\" will show the first 15 records, even if there are more.");
@@ -105,14 +104,14 @@ public:
         return true;
     }
 
-    static bool HandleHelpDeleteAllCommand(ChatHandler* handler, const char* args) {
+    static bool HandleHelpDeleteAllCommand(ChatHandler* handler, const char* /*args*/) {
         handler->PSendSysMessage("This command will delete all existing records of abusers \n");
         handler->PSendSysMessage("This command does not have any arguments.");
         handler->SetSentErrorMessage(true);
         return true;
     }
 
-    static bool HandleHelpDeleteIDCommand(ChatHandler* handler, const char* args) {
+    static bool HandleHelpDeleteIDCommand(ChatHandler* handler, const char* /*args*/) {
         handler->PSendSysMessage("This command will let you delete a specific record from the Database \n");
         handler->PSendSysMessage("Entering a number after this command will act like the ID of the record \n");
         handler->PSendSysMessage("Example : \".afs delete ID 50 \" will delete the record with ID 50.");
