@@ -1,10 +1,16 @@
-﻿/*
+/*
 - Made by mthsena -
 - Edited by Jameyboor -
 - Adapted and Fixed by Erictemponi -
 */
 
 #include "AntiFarming.h"
+
+AntiFarming* AntiFarming::instance()
+{
+    static AntiFarming instance;
+    return &instance;
+}
 
 class AntiFarmingPlayerScript : public PlayerScript {
 public: AntiFarmingPlayerScript() : PlayerScript("AntiFarmingPlayerScript") {}
@@ -18,8 +24,8 @@ public: AntiFarmingPlayerScript() : PlayerScript("AntiFarmingPlayerScript") {}
 
         void OnPVPKill(Player* killer, Player* killed) override {
             if (sConfigMgr->GetBoolDefault("AntiFarming.Enable", true)) {
-                uint32 KillerGUID = killer->GetGUID();
-                uint32 VictimGUID = killed->GetGUID();
+                ObjectGuid KillerGUID = killer->GetGUID();
+                ObjectGuid VictimGUID = killed->GetGUID();
 
                 if (KillerGUID == VictimGUID) // Suicide
                     return;
@@ -54,21 +60,11 @@ class AntiFarmingWorldScript : public WorldScript {
 public:
     AntiFarmingWorldScript() : WorldScript("AntiFarmingWorldScript") { }
 
-    void OnBeforeConfigLoad(bool reload) override {
-        if (!reload) {
-            std::string conf_path = _CONF_DIR;
-            std::string cfg_file = conf_path + "/AntiFarming.conf";
-            #ifdef WIN32
-                cfg_file = "AntiFarming.conf";
-            #endif // WIN32
-            std::string cfg_def_file = cfg_file + ".dist";
-            sConfigMgr->LoadMore(cfg_def_file.c_str());
-
-            sConfigMgr->LoadMore(cfg_file.c_str());
-        }
-    }
-    void OnAfterConfigLoad(bool /*reload*/) override {
-        sLog->outString("Antifarming Module Loaded.");
+    void OnAfterConfigLoad(bool reload) override {
+        if (!reload)
+            sLog->outString("Antifarming Module Loaded.");
+        else
+            sLog->outString("Antifarming Module Reloaded.");
     }
 };
 

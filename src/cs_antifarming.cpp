@@ -1,4 +1,4 @@
-﻿#include "AntiFarming.h"
+#include "AntiFarming.h"
 
 class antifarming_commandscript : public CommandScript {
 public:
@@ -55,9 +55,9 @@ public:
         std::string accName;
 
         for (AntiFarming::antiFarmingData::iterator itr = sAntiFarming->dataMap.begin(); itr != sAntiFarming->dataMap.end() && i < RLimit; ++itr, i++) {
-            sObjectMgr->GetPlayerNameByGUID(itr->first, charName);
-            AccountMgr::GetName(sObjectMgr->GetPlayerAccountIdByGUID(itr->first), accName);
-            snprintf(msg, 250, "ID: |cFFFFFFFF%lu|r | Character: |cFFFFFFFF%s|r | Account: |cFFFFFFFF%s|r | Warning Level: |cFFFF0000%u|r\n", (long)itr->first, charName.c_str(), accName.c_str(), itr->second);
+            sObjectMgr->GetPlayerNameByGUID(itr->first.GetCounter(), charName);
+            AccountMgr::GetName(sObjectMgr->GetPlayerAccountIdByGUID(itr->first.GetCounter()), accName);
+            snprintf(msg, 250, "ID: |cFFFFFFFF%u|r | Character: |cFFFFFFFF%s|r | Account: |cFFFFFFFF%s|r | Warning Level: |cFFFF0000%u|r\n", itr->first.GetCounter(), charName.c_str(), accName.c_str(), itr->second);
             handler->PSendSysMessage("%s", msg);
             handler->SetSentErrorMessage(true);
         }
@@ -83,16 +83,18 @@ public:
         if (!*args)
             return false;
         WorldSession *Session = handler->GetSession();
-        uint32 id = atoi((char*)args);
-        AntiFarming::antiFarmingData::iterator it = sAntiFarming->dataMap.find(id);
+        uint64 idInt = atoi((char*)args);
+        ObjectGuid* id = new ObjectGuid(idInt);
+
+        AntiFarming::antiFarmingData::iterator it = sAntiFarming->dataMap.find(*id);
         if (it == sAntiFarming->dataMap.end()) {
             char msg[250];
-            snprintf(msg, 250, "Log with ID \"%u\" doesn't exist!", id);
+            snprintf(msg, 250, "Log with ID \"%u\" doesn't exist!", id->GetCounter());
             Session->SendNotification("%s", msg);
             return false;
         }
         sAntiFarming->dataMap.erase(it);
-        Session->SendAreaTriggerMessage("Log with ID \"%u\" was successfully deleted!", id);
+        Session->SendAreaTriggerMessage("Log with ID \"%u\" was successfully deleted!", id->GetCounter());
         return true;
     }
 

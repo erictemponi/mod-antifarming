@@ -1,4 +1,4 @@
-﻿#ifndef ANTIFARMING_H
+#ifndef ANTIFARMING_H
 #define ANTIFARMING_H
 
 #include "ScriptMgr.h"
@@ -13,9 +13,11 @@
 
 class AntiFarming {
 public:
-    typedef std::map<uint64, uint8> antiFarmingData;
+    static AntiFarming* instance();
+
+    typedef std::map<ObjectGuid, uint8> antiFarmingData;
     antiFarmingData dataMap;
 };
-#define sAntiFarming ACE_Singleton<AntiFarming, ACE_Null_Mutex>::instance()
+#define sAntiFarming AntiFarming::instance()
 
 #endif
