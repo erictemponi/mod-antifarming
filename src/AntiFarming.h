@@ -3,7 +3,7 @@
 
 #include "ScriptMgr.h"
 #include "Player.h"
-#include "BanManager.h"
+#include "BanMgr.h"
 #include "Language.h"
 #include "ObjectMgr.h"
 #include "Chat.h"
