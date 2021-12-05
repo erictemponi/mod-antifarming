@@ -4,31 +4,31 @@ class antifarming_commandscript : public CommandScript {
 public:
     antifarming_commandscript() : CommandScript("antifarming_commandscript") {}
 
-    std::vector<ChatCommand> GetCommands() const override {
+    Acore::ChatCommands::ChatCommandTable GetCommands() const override {
 
-        static std::vector<ChatCommand> HelpDeleteSubCommandTable = {
-            { "all",        SEC_GAMEMASTER,     false,  &HandleHelpDeleteAllCommand,    "" },
-            { "ID",         SEC_GAMEMASTER,     false,  &HandleHelpDeleteIDCommand,     "" }
+        static Acore::ChatCommands::ChatCommandTable HelpDeleteSubCommandTable = {
+            {"all",         SEC_GAMEMASTER,     false,  &HandleHelpDeleteAllCommand,    "" },
+            {"ID",          SEC_GAMEMASTER,     false,  &HandleHelpDeleteIDCommand,     ""}
         };
 
-        static std::vector<ChatCommand> HelpCommandSubTable = {
+        static Acore::ChatCommands::ChatCommandTable HelpCommandSubTable = {
             { "log",        SEC_GAMEMASTER,     false,  &HandleHelpLogCommand,          "" },
             { "delete",     SEC_GAMEMASTER,     false,  NULL,                           "", HelpDeleteSubCommandTable }
         };
 
-        static std::vector<ChatCommand> DeleteCommandSubTable = {
+        static Acore::ChatCommands::ChatCommandTable DeleteCommandSubTable = {
             { "all",        SEC_GAMEMASTER,     true,   &HandleDeleteAllCommand,        "" },
             { "ID",         SEC_GAMEMASTER,     true,   &HandleDeleteIDCommand,         "" }
         };
 
-        static std::vector<ChatCommand> AFSSubCommandTable = {
+        static Acore::ChatCommands::ChatCommandTable AFSSubCommandTable = {
             { "log",        SEC_GAMEMASTER,     true,   &HandleLogCommand,              "" },
             { "delete",     SEC_ADMINISTRATOR,  true,   NULL,                           "", DeleteCommandSubTable },
             { "help",       SEC_GAMEMASTER,     false,  NULL,                           "", HelpCommandSubTable }
         };
 
 
-        static std::vector<ChatCommand> commandTable =
+        static Acore::ChatCommands::ChatCommandTable commandTable =
         {
             { "afs",        SEC_GAMEMASTER,     true,   NULL,                           "", AFSSubCommandTable }
         };
@@ -55,8 +55,9 @@ public:
         std::string accName;
 
         for (AntiFarming::antiFarmingData::iterator itr = sAntiFarming->dataMap.begin(); itr != sAntiFarming->dataMap.end() && i < RLimit; ++itr, i++) {
-            sObjectMgr->GetPlayerNameByGUID(itr->first.GetCounter(), charName);
-            AccountMgr::GetName(sObjectMgr->GetPlayerAccountIdByGUID(itr->first.GetCounter()), accName);
+            sCharacterCache->GetCharacterNameByGuid(itr->first, charName);
+
+            AccountMgr::GetName(sCharacterCache->GetCharacterAccountIdByGuid(itr->first), accName);
             snprintf(msg, 250, "ID: |cFFFFFFFF%u|r | Character: |cFFFFFFFF%s|r | Account: |cFFFFFFFF%s|r | Warning Level: |cFFFF0000%u|r\n", itr->first.GetCounter(), charName.c_str(), accName.c_str(), itr->second);
             handler->PSendSysMessage("%s", msg);
             handler->SetSentErrorMessage(true);
